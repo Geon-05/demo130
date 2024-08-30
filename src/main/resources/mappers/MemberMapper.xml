@@ -22,4 +22,25 @@
     insert into tb_member (mem_no, id, pw, name)
       values ('M'||lpad(seq_tb_mem.nextval,5,0), #{id}, #{pw}, #{name})
   </insert>
+
+  <!-- selectMemberListPageing --> 
+
+  <select id="selectMemberListPageing" resultType="MemberDto">
+    select *
+    from (
+      select rownum rn, t.*
+      from (
+        select *
+        from tb_member
+        order by mem_no desc
+      ) t )
+    where rn between #{pageNo} * #{amount} - (#{amount} - 1)
+    and #{pageNo} * #{amount}
+  </select>
+
+  <!-- selectTotalCnt --> 
+
+  <select id="selectTotalCnt">
+    select count(*) from tb_member
+  </select>
 </mapper>
