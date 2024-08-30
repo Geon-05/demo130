@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo130.dto.BookDto;
 import com.example.demo130.dto.MemberDto;
-import com.example.demo130.dto.SelectDto;
+import com.example.demo130.dto.SearchDto;
 
 @SpringBootTest
 public class MemberMapperTest {
@@ -28,12 +28,12 @@ public class MemberMapperTest {
   }
 
   @Test
-  void testSelectMemberListPageing() {
-    SelectDto selectDto = new SelectDto();
-    selectDto.setAmount(10);
-    selectDto.setPageNo(1);
+  void testSelectMemberList() {
+    SearchDto searchDto = new SearchDto();
+    searchDto.setAmount(10);
+    searchDto.setPageNo(1);
 
-    List<BookDto> list = mapper.selectMemberListPageing(selectDto);
+    List<BookDto> list = mapper.selectMemberList(searchDto);
 
     assertEquals(10, list.size());
   }

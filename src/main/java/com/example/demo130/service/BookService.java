@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo130.dto.BookDto;
 import com.example.demo130.dto.PageDto;
-import com.example.demo130.dto.SelectDto;
+import com.example.demo130.dto.SearchDto;
 import com.example.demo130.mapper.BookMapper;
 
 @Service
@@ -17,22 +17,18 @@ public class BookService {
   @Autowired
   BookMapper mapper;
 
-  public List<BookDto> selectBookList(){
-    return mapper.selectBookList();
-  }
-
   public BookDto selectBook(String Book_no){
     return mapper.selectBook(Book_no);
   }
 
-  public Map<String, Object> selectBookListPageing(SelectDto selectDto){
+  public Map<String, Object> selectBookList(SearchDto searchDto){
     Map<String, Object> map = new HashMap<>();
 
-    List<BookDto> list = mapper.selectBookListPageing(selectDto);
+    List<BookDto> list = mapper.selectBookList(searchDto);
 
-    int totalCnt = mapper.selectTotalCnt();
+    int totalCnt = mapper.selectTotalCnt(searchDto);
 
-    PageDto pageDto = new PageDto(selectDto, totalCnt);
+    PageDto pageDto = new PageDto(searchDto, totalCnt);
     map.put("list", list);
     map.put("pageDto",pageDto);
 

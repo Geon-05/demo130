@@ -19,32 +19,10 @@
     margin-right: 30px;
   }
 </style>
-<script>
-  function go(pageNo){
-    searchForm.pageNo.value=pageNo;
-    searchForm.submit();
-  }
-</script>
+<script src="/js/list.js"></script>
 </head>
 <body>
-  <header>
-<!-- 네비게이션바 -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">도서관</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="#">도서목록</a>
-          <a class="nav-link" href="#">회원목록</a>
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <header th:insert="~{/common/templatesBuild::navi}">
   </header>
   <main th:with="list=${map.list}, pageDto=${map.pageDto}">
   <!-- 타이틀 -->
@@ -52,13 +30,19 @@
   <!-- 검색 -->
   <hr>
   <form name="searchForm" action="/book/bookList" method="get">
-    pageNo: <input type="text" name="pageNo" value="1" id="pageNo" th:value="${param.pageNo?:'1'}">
-    amount: <input type="text" name="amount" value="10" id="amount" th:value="${param.amount?:'10'}">
-    <br>
-    searchField: <input type="text" name="searchField" value="1" id="searchField">
-    searchWord: <input type="text" name="searchWord" value="10" id="searchWord">
-    <br>
-    <button>조회</button>
+        <!-- 검색필드-->
+        <div class="input-group" id="searchBox">
+          <select class="form-select" name="searchField">
+            <option value="title" selected>도서명</option>
+            <option value="author" th:selected="${map.pageDto.searchDto.searchField == 'author'}">작가</option>
+            <option value="regdate" th:selected="${map.pageDto.searchDto.searchField == 'regdate'}">등록일</option>
+          </select>
+          <!-- 검색어 --> 
+        <input type="text" class="form-control" placeholder="검색어" name="searchWord" th:value="${param.searchWord}">
+        <!-- 검색 버튼 -->
+          <button class="btn btn-outline-secondary" type="submit">검색</button>
+          <button class="btn btn-outline-secondary" type="button" id="btn_insert_book">도서등록</button>
+        </div>
   </form>
   <hr>
 

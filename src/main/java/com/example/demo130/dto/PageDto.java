@@ -9,22 +9,27 @@ public class PageDto {
   private boolean prev;
   private boolean next;
 
-  private SelectDto selectDto;
+  private SearchDto searchDto;
   private int totalCnt;
 
-  public PageDto(SelectDto selectDto, int totalCnt){
-    this.selectDto = selectDto;
+  public PageDto(SearchDto searchDto, int totalCnt) {
+    this.searchDto = searchDto;
 
     int pageBlockAmount = 5;
-    endPage = (int) Math.ceil(selectDto.getPageNo() * 1.0 / pageBlockAmount) * pageBlockAmount;
+    endPage = (int) Math.ceil(searchDto.getPageNo() * 1.0 / pageBlockAmount) * pageBlockAmount;
     startPage = endPage - (pageBlockAmount - 1);
 
-    int realEndPage = (int) Math.ceil(totalCnt * 1.0 / selectDto.getAmount());
+    int realEndPage;
+
+    if (totalCnt == 0) {
+      realEndPage = 1;
+    } else {
+      realEndPage = (int) Math.ceil(totalCnt * 1.0 / searchDto.getAmount());
+    }
     if (endPage > realEndPage) {
       endPage = realEndPage;
     }
-
-    prev = startPage == 1 ? false : true ;
+    prev = startPage == 1 ? false : true;
     next = realEndPage > endPage ? true : false;
   }
 }

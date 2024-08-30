@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo130.dto.BookDto;
 import com.example.demo130.dto.MemberDto;
-import com.example.demo130.dto.SelectDto;
+import com.example.demo130.dto.SearchDto;
 
 @Mapper
 public interface MemberMapper {
@@ -16,7 +16,7 @@ public interface MemberMapper {
 
   public int insertMember(MemberDto member);
 
-  public List<BookDto> selectMemberListPageing(SelectDto selectDto);
+  public List<BookDto> selectMemberList(SearchDto searchDto);
 
   public int selectTotalCnt();
 }

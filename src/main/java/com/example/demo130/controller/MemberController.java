@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import com.example.demo130.dto.SelectDto;
+import com.example.demo130.dto.SearchDto;
 import com.example.demo130.service.MemberService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -18,8 +17,8 @@ public class MemberController {
   MemberService service;
 
   @GetMapping("/member/memberList")
-  public String list(SelectDto selectDto, Model model) {
-    Map<String, Object> map = service.selectMemberListPageing(selectDto);
+  public String list(SearchDto searchDto, Model model) {
+    Map<String, Object> map = service.selectMemberList(searchDto);
     model.addAttribute("map", map);
 
       return "/member/list";

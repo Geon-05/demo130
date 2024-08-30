@@ -3,13 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo130.mapper.BookMapper">
-
-  <!-- selectBookList --> 
-
-  <select id="selectBookList" resultType="BookDto">
-    select * from tb_book order by book_no desc
-  </select>
-
   <!-- selectBook --> 
 
   <select id="selectBook" resultType="BookDto">
@@ -18,13 +11,24 @@
 
   <!-- selectBookListPageing --> 
 
-  <select id="selectBookListPageing" resultType="BookDto">
+  <select id="selectBookList" resultType="BookDto">
   select *
     from (
       select rownum rn, t.*
       from (
         select *
         from tb_book
+        where 1=1
+          <if test="searchWord != null and searchWord != ''">
+            <if test="searchField == 'regdate'">
+              <![CDATA[    
+              and to_char(${searchField},'yyyy-mm-dd') = #{searchWord}
+              ]]>
+            </if>
+            <if test="searchField == 'title' or searchField == 'author'">
+              and ${searchField} = #{searchWord}
+            </if>
+          </if>
         order by regdate desc
       ) t
     )
@@ -35,6 +39,18 @@
   <!-- selectTotalCnt --> 
 
   <select id="selectTotalCnt">
-    select count(*) from tb_book
+    select count(*)
+    from tb_book
+    where 1=1
+    <if test="searchWord != null and searchWord != ''">
+      <if test="searchField == 'regdate'">
+        <![CDATA[    
+        and to_char(${searchField},'yyyy-mm-dd') = #{searchWord}
+        ]]>
+      </if>
+      <if test="searchField == 'title' or searchField == 'author'">
+        and ${searchField} = #{searchWord}
+      </if>
+    </if>
   </select>
 </mapper>

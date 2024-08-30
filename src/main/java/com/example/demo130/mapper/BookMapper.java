@@ -5,16 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo130.dto.BookDto;
-import com.example.demo130.dto.SelectDto;
+import com.example.demo130.dto.SearchDto;
 
 @Mapper
 public interface BookMapper {
-  public List<BookDto> selectBookList();
-
   public BookDto selectBook(String book_no);
 
-  public List<BookDto> selectBookListPageing(SelectDto selectDto);
+  public List<BookDto> selectBookList(SearchDto searchDto);
 
-  public int selectTotalCnt();
+  public int selectTotalCnt(SearchDto searchDto);
 
 }
