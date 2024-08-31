@@ -22,12 +22,12 @@ let insert_book = function(){
     } else if (input_public.value==''){
       let res = confirm('출판사를 미기입합니까?');
       if(res){
-        alert('확인용');
         insertForm.submit();
       } else{
         return;
       }
     }
+    insertForm.submit();
 
   })
 }

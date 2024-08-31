@@ -34,4 +34,8 @@ public class BookService {
 
     return map;
   }
+
+  public int insertBook(BookDto book){
+    return mapper.insertBook(book);
+  }
 }

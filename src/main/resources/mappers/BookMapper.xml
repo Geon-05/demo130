@@ -53,4 +53,11 @@
       </if>
     </if>
   </select>
+
+  <!-- insertBook --> 
+
+  <insert id="insertBook">
+    insert into tb_book (book_no,title,author,price,pub_no)
+    values ('B'||lpad(seq_tb_book.nextval,5,0),#{title},#{author},#{price},#{pub_no})
+  </insert>
 </mapper>
